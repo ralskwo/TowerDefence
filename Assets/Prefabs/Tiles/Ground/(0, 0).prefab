@@ -44,11 +44,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1224889385401885248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b23c21cff3963c9418e45ab8daad5ba2, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bbe95f1203623b45904427536581a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: -6344518850722411792, guid: a53f4d570d405c44ba4e5229430acc07, type: 3}
-  isPlaceable: 1
+  isPlaceable: 0
 --- !u!65 &8420016320506797657
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0, 0
+  m_text: -2, 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

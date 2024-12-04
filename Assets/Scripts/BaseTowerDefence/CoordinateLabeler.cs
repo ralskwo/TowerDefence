@@ -11,18 +11,31 @@ public class CoordinateLabeler : MonoBehaviour
 {
     [SerializeField] Color defaultColor = Color.white;
     [SerializeField] Color blockedColor = Color.red;
-        
+
+#if true
+    [SerializeField] Color exploredColor = Color.yellow;
+    [SerializeField] Color pathColor = Color.blue;
+#endif
+
+
     TextMeshPro label;
-    Vector2Int coordinates = new Vector2Int();  
-    WayPoint waypoint;
+    Vector2Int coordinates = new Vector2Int();
+#if true
+    GridManager gridManager;
+#else
+    Tile waypoint;
+#endif
 
 
     private void Awake()
     {        
         label = GetComponent<TextMeshPro>();
         label.enabled = false;
-
-        waypoint = GetComponentInParent<WayPoint>();
+#if true
+        gridManager = FindObjectOfType<GridManager>();
+#else
+        waypoint = GetComponentInParent<Tile>();
+#endif
         DisplayCoordinates();
     }
 
@@ -41,6 +54,30 @@ public class CoordinateLabeler : MonoBehaviour
 
     private void SetLabelColor()
     {
+#if true
+        if (gridManager == null) { return; }
+
+        Node node = gridManager.GetNode(coordinates);
+
+        if (node == null) { return; }
+
+        if (!node.isWalkable)
+        {
+            label.color = blockedColor;
+        }
+        else if (node.isPath)
+        {
+            label.color = pathColor;
+        }
+        else if (node.isExplored)
+        {
+            label.color = exploredColor;
+        }
+        else
+        {
+            label.color = defaultColor;
+        }
+#else
         if (waypoint.IsPlaceable)
         {
             label.color = defaultColor;
@@ -49,9 +86,10 @@ public class CoordinateLabeler : MonoBehaviour
         {
             label.color = blockedColor; 
         }
+#endif
     }
 
-    void ToggleLables()
+        void ToggleLables()
     {
         if (Input.GetKeyDown(KeyCode.C)) 
         {
@@ -61,7 +99,12 @@ public class CoordinateLabeler : MonoBehaviour
 
     private void DisplayCoordinates()
     {
-#if UNITY_EDITOR
+#if true
+        if (gridManager == null) { return; }
+
+        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / gridManager.UnityGridSize);
+        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / gridManager.UnityGridSize);
+#elif UNITY_EDITOR
         coordinates.x = Mathf.RoundToInt(transform.parent.position.x / UnityEditor.EditorSnapSettings.move.x);
         coordinates.y = Mathf.RoundToInt(transform.parent.position.z / UnityEditor.EditorSnapSettings.move.z);
 
