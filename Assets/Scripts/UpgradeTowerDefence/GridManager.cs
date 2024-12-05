@@ -49,7 +49,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Vector2Int GetCoordinatesGromPosition(Vector3 position)
+    public Vector2Int GetCoordinatesFromPosition(Vector3 position)
     {
         Vector2Int coordinates = new Vector2Int();
 

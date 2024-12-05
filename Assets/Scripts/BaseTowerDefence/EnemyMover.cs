@@ -23,9 +23,11 @@ public class EnemyMover : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        RecalculatePath();
         ReturnToStart();
+        RecalculatePath(true);
+#if false
         StartCoroutine(FollowPath());
+#endif
     }
 
     private void Awake()
@@ -35,12 +37,29 @@ public class EnemyMover : MonoBehaviour
         pathFinder = FindObjectOfType<PathFinder>();
     }
 
-    void RecalculatePath()
+    void RecalculatePath(bool resetPath)
     {
+#if true
+        Vector2Int coordinates = new Vector2Int();
+
+        if (resetPath)
+        {
+            coordinates = pathFinder.StartCoordinates;
+        }
+        else
+        {
+            coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
+        }
+
+        StopAllCoroutines();
+#endif
+
         path.Clear();
 
 #if true
-        path = pathFinder.GetNewPath();
+        path = pathFinder.GetNewPath(coordinates);
+
+        StartCoroutine(FollowPath());
 #else
         GameObject parent = GameObject.FindGameObjectWithTag("Path");
 
@@ -74,7 +93,7 @@ public class EnemyMover : MonoBehaviour
     IEnumerator FollowPath()
     {
 #if true
-        for (int i = 0;  i < path.Count; i++)
+        for (int i = 1;  i < path.Count; i++)
         {
             Vector3 startPosition = transform.position;
             Vector3 endPosition = gridManager.GetPositionFromCoordinates(path[i].coordinates);
