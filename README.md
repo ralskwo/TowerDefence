@@ -43,6 +43,13 @@ git clone https://github.com/ralskwo/TowerDefence.git
 - **Object Pooling**: 적 객체의 생성 및 재사용.
 - **UI Management**: 자원 상태를 실시간으로 표시.
 
+## 데모 영상
+
+
+https://github.com/user-attachments/assets/e3770d81-4dd1-47f9-9440-783e88ab94fe
+
+
+
 ## 기여 방법
 
 1. 이 저장소를 포크합니다.
